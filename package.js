@@ -2,9 +2,9 @@ Package.describe({
   name: 'drewmoore:eight-track',
   version: '0.0.1',
   // Brief, one-line summary of the package.
-  summary: '',
+  summary: 'HTTP caching for the Meteor framework.',
   // URL to the Git repository containing the source code for this package.
-  git: '',
+  git: 'https://github.com/drewmoore/eight-track',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
@@ -13,12 +13,19 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.4.1.2');
   api.use('ecmascript');
+  api.use('http');
   api.mainModule('eight-track.js');
+  api.export('EightTrack');
 });
 
 Package.onTest(function(api) {
   api.use('ecmascript');
-  api.use('tinytest');
+  api.use('dispatch:mocha-phantomjs@0.1.7');
+  api.use('practicalmeteor:chai@2.1.0');
   api.use('drewmoore:eight-track');
   api.mainModule('eight-track-tests.js');
+});
+
+Npm.depends({
+  sinon: '1.17.6'
 });
