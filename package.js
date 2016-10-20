@@ -14,6 +14,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.4.1.2');
   api.use('ecmascript');
   api.use('http');
+  api.use('practicalmeteor:sinon@1.14.1');
   api.mainModule('eight-track.js');
   api.export('EightTrack');
 });
@@ -24,8 +25,4 @@ Package.onTest(function(api) {
   api.use('practicalmeteor:chai@2.1.0');
   api.use('drewmoore:eight-track');
   api.mainModule('eight-track-tests.js');
-});
-
-Npm.depends({
-  sinon:   '1.17.6'
 });
