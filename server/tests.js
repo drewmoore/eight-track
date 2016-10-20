@@ -51,4 +51,20 @@ describe('Success', function () {
     assert(typeof JSON.parse(cachedResponse.content).title == 'string');
     done();
   });
+
+  describe('Stubbing Success Request from Cache', function () {
+    let result2;
+
+    beforeEach(function (done) {
+      EightTrack.use(cassetteName, function () {
+        result2 = HTTP.get(sampleBaseUrl + '/posts/1');
+        done();
+      });
+    });
+
+    it('perfectly mimics http response', function (done) {
+      assert.deepEqual(result2, result);
+      done();
+    });
+  });
 });

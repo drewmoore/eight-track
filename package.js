@@ -26,3 +26,7 @@ Package.onTest(function(api) {
   api.use('drewmoore:eight-track');
   api.mainModule('eight-track-tests.js');
 });
+
+Npm.depends({
+  jsonfile: '2.4.0'
+});

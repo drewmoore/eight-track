@@ -1,12 +1,14 @@
 import { HTTP }  from 'meteor/http';
 import { sinon } from 'meteor/practicalmeteor:sinon';
 
-const fs = Npm.require('fs');
+const fs       = Npm.require('fs');
+const jsonfile = Npm.require('jsonfile');
 
 export class EightTrack {
   static use(cassetteName, block) {
     const self = this;
-    const cassetteFilePath = self.cassettesDirectoryPath + cassetteName + '.json';
+    const cassetteFileName = cassetteName + '.json';
+    const cassetteFilePath = self.cassettesDirectoryPath + cassetteFileName;
     let cassettesDirectoryList = [];
 
     // Read directory of cassettes or initialize an empty one.
@@ -23,13 +25,13 @@ export class EightTrack {
       const originalMethod = HTTP[methodName];
       sinon.stub(HTTP, methodName, (_args) => {
         let response;
-        if (cassettesDirectoryList.includes(cassetteFilePath)) {
-          response = fs.readFileSync(cassetteFilePath);
+        if (cassettesDirectoryList.includes(cassetteFileName)) {
+          response = jsonfile.readFileSync(cassetteFilePath);
         } else {
           if (!(_args instanceof Array))
             _args = [_args];
           response = originalMethod.apply(HTTP, _args);
-          fs.writeFileSync(cassetteFilePath, JSON.stringify(response));
+          jsonfile.writeFileSync(cassetteFilePath, response);
         }
         return response;
       });
