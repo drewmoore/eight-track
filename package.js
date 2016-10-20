@@ -27,5 +27,5 @@ Package.onTest(function(api) {
 });
 
 Npm.depends({
-  sinon: '1.17.6'
+  sinon:   '1.17.6'
 });
