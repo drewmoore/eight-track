@@ -1,8 +1,12 @@
 import { HTTP }  from 'meteor/http';
 import { sinon } from 'meteor/practicalmeteor:sinon';
 
-const fs       = Npm.require('fs');
-const jsonfile = Npm.require('jsonfile');
+let fs;
+let jsonfile;
+if (Meteor.isServer) {
+  fs       = Npm.require('fs');
+  jsonfile = Npm.require('jsonfile');
+}
 
 export class EightTrack {
   static use(cassetteName, block) {
@@ -23,6 +27,7 @@ export class EightTrack {
     const httpMethods = ['get', 'post', 'put', 'patch', 'del'];
     httpMethods.forEach(methodName => {
       const originalMethod = HTTP[methodName];
+      if (originalMethod.restore) originalMethod.restore();
       sinon.stub(HTTP, methodName, (_args) => {
         let response;
         if (cassettesDirectoryList.includes(cassetteFileName)) {
