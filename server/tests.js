@@ -155,4 +155,44 @@ describe('Success', function () {
       });
     });
   });
+
+  describe('Patch', function () {
+    let cassetteName;
+    let result;
+
+    beforeEach(function (done) {
+      cassetteName = 'jsonPlaceHolderPatchSuccess';
+      EightTrack.use(cassetteName, function () {
+        result = HTTP.patch(sampleBaseUrl + 'posts/1', { data: { thing: 'whatever' } });
+        done();
+      });
+    });
+
+    it('creates a json file with the cached http response', function (done) {
+      const file = fs.readFileSync(
+        EightTrack.cassettesDirectoryPath + cassetteName + '.json'
+      );
+      const cachedResponse = JSON.parse(file);
+      assert.equal(200, cachedResponse.statusCode);
+      assert(cachedResponse.headers['content-type'].match(RegExp('application/json')));
+      assert.equal(typeof cachedResponse.data.id, 'number');
+      done();
+    });
+
+    describe('Stubbing Request from Cache', function () {
+      let result2;
+
+      beforeEach(function (done) {
+        EightTrack.use(cassetteName, function () {
+          result2 = HTTP.patch(sampleBaseUrl + 'posts/1', { data: { thing: 'whatever' } });
+          done();
+        });
+      });
+
+      it('perfectly mimics original http response', function (done) {
+        assert.deepEqual(result2, result);
+        done();
+      });
+    });
+  });
 });
