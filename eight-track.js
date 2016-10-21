@@ -20,7 +20,7 @@ export class EightTrack {
     }
 
     // Stub http methods. Preserve the original to be conditionally called inside wrapper.
-    const httpMethods = ['get', 'post', 'put', 'del'];
+    const httpMethods = ['get', 'post', 'put', 'patch', 'del'];
     httpMethods.forEach(methodName => {
       const originalMethod = HTTP[methodName];
       sinon.stub(HTTP, methodName, (_args) => {
