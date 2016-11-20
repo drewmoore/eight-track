@@ -9,7 +9,7 @@ if (Meteor.isServer) {
 }
 
 export class EightTrack {
-  static use(cassetteName, block) {
+  static useCassette(cassetteName, block) {
     const self = this;
     const cassetteFileName = cassetteName + '.json';
     const cassetteFilePath = self.cassettesDirectoryPath + cassetteFileName;

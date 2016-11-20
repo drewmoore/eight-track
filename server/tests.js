@@ -19,7 +19,7 @@ describe('Success', function () {
       // Test that the cassettes directory does not exist pre-caching.
       try { fs.readdirSync(EightTrack.cassettesDirectoryPath); } catch(e) { preFsError = e; }
       cassetteName = 'jsonPlaceHolderGetSuccess';
-      EightTrack.use(cassetteName, function () {
+      EightTrack.useCassette(cassetteName, function () {
         result = HTTP.get(sampleBaseUrl + 'posts/1');
         cassettesDirectoryList = fs.readdirSync(EightTrack.cassettesDirectoryPath);
         done();
@@ -63,7 +63,7 @@ describe('Success', function () {
       let result2;
 
       beforeEach(function (done) {
-        EightTrack.use(cassetteName, function () {
+        EightTrack.useCassette(cassetteName, function () {
           result2 = HTTP.get(sampleBaseUrl + 'posts/1');
           done();
         });
@@ -82,7 +82,7 @@ describe('Success', function () {
 
     beforeEach(function (done) {
       cassetteName = 'jsonPlaceHolderPostSuccess';
-      EightTrack.use(cassetteName, function () {
+      EightTrack.useCassette(cassetteName, function () {
         result = HTTP.post(sampleBaseUrl + 'posts', { data: { thing: 'whatever' } });
         done();
       });
@@ -103,7 +103,7 @@ describe('Success', function () {
       let result2;
 
       beforeEach(function (done) {
-        EightTrack.use(cassetteName, function () {
+        EightTrack.useCassette(cassetteName, function () {
           result2 = HTTP.post(sampleBaseUrl + 'posts', { data: { thing: 'whatever' } });
           done();
         });
@@ -122,7 +122,7 @@ describe('Success', function () {
 
     beforeEach(function (done) {
       cassetteName = 'jsonPlaceHolderPutSuccess';
-      EightTrack.use(cassetteName, function () {
+      EightTrack.useCassette(cassetteName, function () {
         result = HTTP.put(sampleBaseUrl + 'posts/1', { data: { thing: 'whatever' } });
         done();
       });
@@ -143,7 +143,7 @@ describe('Success', function () {
       let result2;
 
       beforeEach(function (done) {
-        EightTrack.use(cassetteName, function () {
+        EightTrack.useCassette(cassetteName, function () {
           result2 = HTTP.put(sampleBaseUrl + 'posts/1', { data: { thing: 'whatever' } });
           done();
         });
@@ -162,7 +162,7 @@ describe('Success', function () {
 
     beforeEach(function (done) {
       cassetteName = 'jsonPlaceHolderPatchSuccess';
-      EightTrack.use(cassetteName, function () {
+      EightTrack.useCassette(cassetteName, function () {
         result = HTTP.patch(sampleBaseUrl + 'posts/1', { data: { thing: 'whatever' } });
         done();
       });
@@ -183,7 +183,7 @@ describe('Success', function () {
       let result2;
 
       beforeEach(function (done) {
-        EightTrack.use(cassetteName, function () {
+        EightTrack.useCassette(cassetteName, function () {
           result2 = HTTP.patch(sampleBaseUrl + 'posts/1', { data: { thing: 'whatever' } });
           done();
         });
@@ -202,7 +202,7 @@ describe('Success', function () {
 
     beforeEach(function (done) {
       cassetteName = 'jsonPlaceHolderDelSuccess';
-      EightTrack.use(cassetteName, function () {
+      EightTrack.useCassette(cassetteName, function () {
         result = HTTP.del(sampleBaseUrl + 'posts/1');
         done();
       });
@@ -222,7 +222,7 @@ describe('Success', function () {
       let result2;
 
       beforeEach(function (done) {
-        EightTrack.use(cassetteName, function () {
+        EightTrack.useCassette(cassetteName, function () {
           result2 = HTTP.del(sampleBaseUrl + 'posts/1');
           done();
         });
