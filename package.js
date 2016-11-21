@@ -23,6 +23,7 @@ Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('dispatch:mocha-phantomjs@0.1.7');
   api.use('practicalmeteor:chai@2.1.0');
+  api.use('practicalmeteor:sinon@1.14.1');
   api.use('drewmoore:eight-track');
   api.mainModule('eight-track-tests.js');
 });

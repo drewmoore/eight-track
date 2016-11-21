@@ -30,7 +30,10 @@ export class EightTrack {
       if (originalMethod.restore) originalMethod.restore();
       sinon.stub(HTTP, methodName, (_args) => {
         let response;
-        if (cassettesDirectoryList.includes(cassetteFileName)) {
+        if (
+          cassettesDirectoryList.includes(cassetteFileName) &&
+          !self.cacheExpired(cassetteFilePath)
+        ) {
           response = jsonfile.readFileSync(cassetteFilePath);
         } else {
           if (!(_args instanceof Array))
@@ -47,7 +50,22 @@ export class EightTrack {
     httpMethods.forEach(methodName => { HTTP[methodName].restore(); });
   }
 
+  // Is the cassette expired, according to the set reRecordInterval?
+  static cacheExpired(cassetteFilePath) {
+    const self      = this;
+    const fileStats = fs.statSync(cassetteFilePath);
+    return (Date.now() - fileStats.birthtime.getTime()) >= self.reRecordInterval;
+  }
+
+
   static get cassettesDirectoryPath() {
     return process.env.PWD + '/eight-track-cassettes/';
+  }
+
+  // Determines expiration interval for cassettes. After they expire, they will
+  // be recreated with a new http request.
+  static get reRecordInterval() {
+    // For now, arbitrarily set all cassettes to expire in 24 hours from birth in milliseconds.
+    return 8.64e+7;
   }
 }
